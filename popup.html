@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capsule Vault</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header__brand">
+      <span class="header__logo">CV</span>
+      <div>
+        <div class="header__title">Capsule Vault</div>
+        <div class="header__sub" id="stats-label">Loading...</div>
+      </div>
+    </div>
+    <div class="header__actions">
+      <button class="icon-btn" id="btn-new" title="New capsule">+</button>
+      <button class="icon-btn" id="btn-export" title="Export JSON">EX</button>
+      <button class="icon-btn" id="btn-import" title="Import JSON">IM</button>
+      <button class="icon-btn icon-btn--danger" id="btn-clear" title="Clear all capsules">CL</button>
+    </div>
+  </header>
+
+  <section class="trust-panel">
+    <div>
+      <div class="trust-panel__title">All data stored locally</div>
+      <div class="trust-panel__sub">No network requests. No accounts. No telemetry.</div>
+    </div>
+    <label class="toggle" title="Show capture button on the active page">
+      <input type="checkbox" id="floating-toggle" />
+      <span class="toggle__track"></span>
+      <span class="toggle__label">Floating Capture</span>
+    </label>
+  </section>
+
+  <div class="search-bar">
+    <span class="search-icon">/</span>
+    <input
+      type="text"
+      id="search-input"
+      class="search-input"
+      placeholder="Search title, content, tags..."
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button class="search-clear" id="btn-search-clear" title="Clear">x</button>
+  </div>
+
+  <div class="filter-row" id="filter-row">
+    <button class="chip chip--active" data-filter="all">All</button>
+    <button class="chip" data-filter="ChatGPT">ChatGPT</button>
+    <button class="chip" data-filter="Claude">Claude</button>
+    <button class="chip" data-filter="Gemini">Gemini</button>
+    <button class="chip" data-filter="Other">Other</button>
+  </div>
+
+  <div class="list-container" id="capsule-list">
+    <div class="empty-state" id="empty-state">
+      <div class="empty-state__icon">CV</div>
+      <div class="empty-state__title">No capsules yet</div>
+      <div class="empty-state__sub">Select text and right-click Save to Capsule, or press Ctrl+Shift+S.</div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="create-modal">
+    <div class="modal">
+      <div class="modal__header">
+        <span class="modal__title">New Capsule</span>
+        <button class="modal__close" id="create-modal-close">x</button>
+      </div>
+      <div class="modal__body">
+        <label class="form-label">Title <span class="form-hint">(optional)</span></label>
+        <input type="text" class="form-input" id="new-title" placeholder="Auto-generated from content" maxlength="120" />
+        <label class="form-label">Content</label>
+        <textarea class="form-textarea" id="new-content" placeholder="Paste your context here..." maxlength="8000"></textarea>
+        <label class="form-label">Tags <span class="form-hint">(comma-separated)</span></label>
+        <input type="text" class="form-input" id="new-tags" placeholder="e.g. code, project, prompt" />
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" id="create-modal-cancel">Cancel</button>
+        <button class="btn btn--primary" id="create-modal-save">Save Capsule</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay hidden" id="view-modal">
+    <div class="modal modal--wide">
+      <div class="modal__header">
+        <span class="modal__title" id="view-modal-title">Edit Capsule</span>
+        <button class="modal__close" id="view-modal-close">x</button>
+      </div>
+      <div class="modal__body">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-input" id="edit-title" maxlength="120" />
+        <label class="form-label">Content</label>
+        <textarea class="form-textarea form-textarea--tall" id="edit-content" maxlength="8000"></textarea>
+        <label class="form-label">Tags</label>
+        <input type="text" class="form-input" id="edit-tags" />
+        <label class="checkbox-row">
+          <input type="checkbox" id="edit-pinned" />
+          <span>Pin to top</span>
+        </label>
+        <div class="view-meta" id="view-meta"></div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--danger" id="edit-delete">Delete</button>
+        <div style="flex:1"></div>
+        <button class="btn btn--ghost" id="view-modal-cancel">Cancel</button>
+        <button class="btn btn--primary" id="edit-save">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="import-file" accept=".json" style="display:none" />
+  <script src="popup.js"></script>
+</body>
+</html>

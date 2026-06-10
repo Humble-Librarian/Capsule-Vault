@@ -1,0 +1,306 @@
+/* Capsule Vault — content.css */
+/* All injected UI. Uses cv- prefix to avoid conflicts. */
+
+:root {
+  --cv-bg: #0e0e12;
+  --cv-surface: #1a1a24;
+  --cv-surface2: #22223a;
+  --cv-border: #2a2a40;
+  --cv-accent: #6c63ff;
+  --cv-accent-dim: rgba(108, 99, 255, 0.15);
+  --cv-text: #e2e2f0;
+  --cv-muted: #7a7a9a;
+  --cv-danger: #ff4d6d;
+  --cv-success: #22c55e;
+  --cv-radius: 10px;
+  --cv-font: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --cv-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(108,99,255,0.15);
+}
+
+/* ─── FAB ─────────────────────────────────────────────────────────────────── */
+
+#cv-fab {
+  position: fixed;
+  bottom: 88px;
+  right: 20px;
+  z-index: 2147483640;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px 10px 12px;
+  background: var(--cv-bg);
+  border: 1px solid var(--cv-border);
+  border-left: 3px solid var(--cv-accent);
+  border-radius: 26px;
+  color: var(--cv-text);
+  font-family: var(--cv-font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(108,99,255,0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#cv-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(108,99,255,0.3), 0 0 0 1px rgba(108,99,255,0.4);
+  border-left-color: #8b85ff;
+}
+
+#cv-fab:active {
+  transform: translateY(0);
+}
+
+.cv-fab__icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.cv-fab__label {
+  color: var(--cv-text);
+}
+
+/* ─── Modal overlay ───────────────────────────────────────────────────────── */
+
+#cv-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483641;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: cvFadeIn 0.15s ease;
+}
+
+#cv-modal-overlay.cv-modal-overlay--closing {
+  animation: cvFadeOut 0.2s ease forwards;
+}
+
+.cv-modal {
+  width: 520px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 48px);
+  background: var(--cv-surface);
+  border: 1px solid var(--cv-border);
+  border-top: 3px solid var(--cv-accent);
+  border-radius: var(--cv-radius);
+  box-shadow: var(--cv-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: cvSlideUp 0.18s ease;
+  font-family: var(--cv-font);
+}
+
+.cv-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--cv-border);
+}
+
+.cv-modal__logo {
+  font-size: 18px;
+}
+
+.cv-modal__title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cv-accent);
+}
+
+.cv-modal__close {
+  background: none;
+  border: none;
+  color: var(--cv-muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 0.1s, background 0.1s;
+  font-family: var(--cv-font);
+  line-height: 1;
+}
+
+.cv-modal__close:hover {
+  color: var(--cv-text);
+  background: var(--cv-surface2);
+}
+
+.cv-modal__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.cv-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cv-muted);
+  margin-bottom: 4px;
+}
+
+.cv-hint {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #55556a;
+}
+
+.cv-input,
+.cv-textarea {
+  width: 100%;
+  background: var(--cv-bg);
+  border: 1px solid var(--cv-border);
+  border-radius: 6px;
+  color: var(--cv-text);
+  font-family: var(--cv-font);
+  font-size: 12.5px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  resize: none;
+}
+
+.cv-input:focus,
+.cv-textarea:focus {
+  border-color: var(--cv-accent);
+}
+
+.cv-input--error,
+.cv-textarea--error {
+  border-color: var(--cv-danger) !important;
+}
+
+.cv-textarea {
+  min-height: 120px;
+  max-height: 220px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.cv-modal__source {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--cv-muted);
+  margin-top: 2px;
+}
+
+.cv-source-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cv-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--cv-border);
+}
+
+.cv-btn {
+  padding: 9px 18px;
+  border-radius: 6px;
+  border: none;
+  font-family: var(--cv-font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cv-btn--ghost {
+  background: transparent;
+  color: var(--cv-muted);
+  border: 1px solid var(--cv-border);
+}
+
+.cv-btn--ghost:hover {
+  color: var(--cv-text);
+  border-color: var(--cv-muted);
+}
+
+.cv-btn--primary {
+  background: var(--cv-accent);
+  color: #fff;
+}
+
+.cv-btn--primary:hover {
+  background: #7b74ff;
+  box-shadow: 0 0 16px rgba(108,99,255,0.4);
+}
+
+/* ─── Toast ───────────────────────────────────────────────────────────────── */
+
+.cv-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  z-index: 2147483642;
+  background: var(--cv-surface);
+  border: 1px solid var(--cv-border);
+  border-radius: 24px;
+  padding: 10px 20px;
+  font-family: var(--cv-font);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cv-text);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.cv-toast--success {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.cv-toast--error {
+  border-color: rgba(255, 77, 109, 0.4);
+  color: #ff8fa3;
+}
+
+.cv-toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+
+@keyframes cvFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cvFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes cvSlideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
