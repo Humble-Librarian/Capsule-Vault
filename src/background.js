@@ -3,6 +3,7 @@
 import { dbPut, dbGet, dbGetAll, dbGetRecent, dbDelete, dbBulkPut, dbCount, dbClear } from "./db.js";
 import { processMemory } from "./processor.js";
 import { retrieveRankedContext } from "./retrieval.js";
+import { getApiKey, setApiKey, chat, analyzeCode, explainCode, planTask } from "./groq.js";
 
 const MAX = 250;
 
@@ -62,6 +63,27 @@ async function handle(msg) {
     case "GET_STATS": return { ok: true, count: await dbCount(), max: MAX };
     case "ENSURE_CONTENT_SCRIPT": return inject(msg.tabId);
     case "CLEAR_ALL": await dbClear(); return { ok: true };
+
+    // Groq API
+    case "GET_API_KEY": return { ok: true, key: await getApiKey() };
+    case "SET_API_KEY": await setApiKey(msg.key); return { ok: true };
+    case "CHAT": {
+      const answer = await chat(msg.messages, msg.options);
+      return { ok: true, answer };
+    }
+    case "ANALYZE_CODE": {
+      const answer = await analyzeCode(msg.code, msg.question, { language: msg.language, fileName: msg.fileName });
+      return { ok: true, answer };
+    }
+    case "EXPLAIN_CODE": {
+      const answer = await explainCode(msg.code, { language: msg.language, fileName: msg.fileName });
+      return { ok: true, answer };
+    }
+    case "PLAN_TASK": {
+      const answer = await planTask(msg.task, msg.codeContext);
+      return { ok: true, answer };
+    }
+
     default: return { ok: false, error: "Unknown" };
   }
 }

@@ -12,6 +12,10 @@
     "contextMenus"
   ],
 
+  "host_permissions": [
+    "https://api.groq.com/*"
+  ],
+
   "action": {
     "default_popup": "popup.html",
     "default_title": "Context Vault",

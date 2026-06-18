@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "contextvault"
+version = "0.1.0"
+description = "Context-Aware CLI Coding Agent with persistent memory"
+requires-python = ">=3.10"
+dependencies = [
+    "tree-sitter-languages>=1.8.0",
+    "sentence-transformers>=2.2.0",
+    "numpy>=1.24.0",
+    "faiss-cpu>=1.7.4",
+    "openai>=1.0.0",
+]
+
+[project.optional-dependencies]
+ollama = ["httpx>=0.25.0"]
+dev = ["pytest>=7.0", "ruff>=0.1.0"]
+
+[project.scripts]
+contextvault = "cli.main:main"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]

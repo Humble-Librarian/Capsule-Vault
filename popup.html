@@ -31,25 +31,90 @@
     </div>
   </header>
 
-  <div class="search-bar">
-    <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="search-input" class="search-input" placeholder="Search memories..." autocomplete="off" spellcheck="false" />
-    <button class="search-clear" id="btn-search-clear" title="Clear">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <button class="tab active" data-tab="memories">Memories</button>
+    <button class="tab" data-tab="codebase">Codebase</button>
   </div>
 
-  <div class="list-wrapper">
-    <div class="empty-state" id="empty-state">
-      <div class="empty-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-      </div>
-      <div class="empty-title">No memories yet</div>
-      <div class="empty-sub">Click the <strong>CV</strong> button on any page to capture context.</div>
+  <!-- Memories Tab -->
+  <div class="tab-content active" id="tab-memories">
+    <div class="search-bar">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" class="search-input" placeholder="Search memories..." autocomplete="off" spellcheck="false" />
+      <button class="search-clear" id="btn-search-clear" title="Clear">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <div class="list-container" id="memory-list"></div>
+
+    <div class="list-wrapper">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="empty-title">No memories yet</div>
+        <div class="empty-sub">Click the <strong>CV</strong> button on any page to capture context.</div>
+      </div>
+      <div class="list-container" id="memory-list"></div>
+    </div>
   </div>
 
+  <!-- Codebase Tab -->
+  <div class="tab-content" id="tab-codebase">
+    <div class="cb-status" id="cb-status">
+      <div class="cb-status__icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13,2 13,9 20,9"/></svg>
+      </div>
+      <div class="cb-status__info">
+        <div class="cb-status__label" id="cb-server-status">Server: checking...</div>
+        <div class="cb-status__detail" id="cb-index-status">Index: --</div>
+      </div>
+      <button class="btn btn--primary btn--sm" id="cb-init-btn">Init Project</button>
+    </div>
+
+    <div class="cb-query-area">
+      <div class="cb-input-row">
+        <input type="text" id="cb-query" class="cb-query-input" placeholder="Ask about code on this page..." autocomplete="off" />
+        <button class="btn btn--primary" id="cb-ask-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
+        </button>
+        <button class="cb-settings-btn" id="cb-settings-btn" title="API Key Settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+      <div class="cb-input-meta">
+        <span class="cb-key-indicator" id="cb-key-indicator" title="API key status"></span>
+      </div>
+      <div class="cb-quick-actions">
+        <button class="cb-quick" data-action="ask">Ask</button>
+        <button class="cb-quick" data-action="do">Do</button>
+        <button class="cb-quick" data-action="why">Why</button>
+      </div>
+    </div>
+
+    <div class="cb-response" id="cb-response">
+      <div class="cb-empty">
+        <div class="cb-empty__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg>
+        </div>
+        <div class="cb-empty__title">Codebase Agent</div>
+        <div class="cb-empty__sub">Ask questions about your code, plan tasks, or explain past decisions.</div>
+      </div>
+    </div>
+
+    <div class="cb-footer">
+      <button class="cb-footer__btn" id="cb-undo-btn" title="Undo last action">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        Undo
+      </button>
+      <button class="cb-footer__btn" id="cb-copy-btn" title="Copy response">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+  </div>
+
+  <!-- Modals (same as before) -->
   <div class="modal-overlay hidden" id="create-modal">
     <div class="modal">
       <div class="modal__header">
